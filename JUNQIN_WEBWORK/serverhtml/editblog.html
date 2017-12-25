@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>周浚覃个人博客网站―一个钟爱后台开发的程序员的博客网站</title>
+		<meta name="keywords" content="周浚覃" />
+		<meta name="description" content="周浚覃的个人博客" />
+		<link href="../css/base.css" rel="stylesheet">
+		<link href="../css/about.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../css/index.css" />
+		<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+ 
+	</head>
+
+	<body>
+		 <textarea rows="70" cols="110"> 
+		<article class="aboutcon">
+			<h1 class="t_nav"><span>多线程</span></h1>
+			<div class="about left">
+				<h2>Just about me</h2>
+				<ul>
+					<p>Java线程具有五中基本状态
+
+新建状态（New）：当线程对象对创建后，即进入了新建状态，如：Thread t = new MyThread();
+
+就绪状态（Runnable）：当调用线程对象的start()方法（t.start();），线程即进入就绪状态。处于就绪状态的线程，只是说明此线程已经做好了准备，随时等待CPU调度执行，并不是说执行了t.start()此线程立即就会执行；
+</p>
+<p> 
+运行状态（Running）：当CPU开始调度处于就绪状态的线程时，此时线程才得以真正执行，即进入到运行状态。注：就     绪状态是进入到运行状态的唯一入口，也就是说，线程要想进入运行状态执行，首先必须处于就绪状态中；
+</p>
+<p>
+阻塞状态（Blocked）：处于运行状态中的线程由于某种原因，暂时放弃对CPU的使用权，停止执行，此时进入阻塞状态，直到其进入到就绪状态，才 有机会再次被CPU调用以进入到运行状态。根据阻塞产生的原因不同，阻塞状态又可以分为三种：
+</p>
+<p>
+1.等待阻塞：运行状态中的线程执行wait()方法，使本线程进入到等待阻塞状态；
+</p>
+<p>
+2.同步阻塞 -- 线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态；
+</p>
+<p>
+3.其他阻塞 -- 通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。
+</p>
+<p>
+死亡状态（Dead）：线程执行完了或者因异常退出了run()方法，该线程结束生命周期。
+</p>
+<p>
+Runnable的中文意思是“任务”，顾名思义，通过实现Runnable接口，我们定义了一个子任务，然后将子任务交由Thread去执行。注意，这种方式必须将Runnable作为Thread类的参数，然后通过Thread的start方法来创建一个新线程来执行该子任务。如果调用Runnable的run方法的话，是不会创建新线程的，这根普通的方法调用没有任何区别。
+</p>
+<p>
+事实上，查看Thread类的实现源代码会发现Thread类是实现了Runnable接口的。
+</p>
+<p>
+在Java中，这2种方式都可以用来创建线程去执行子任务，具体选择哪一种方式要看自己的需求。直接继承Thread类的话，可能比实现Runnable接口看起来更加简洁，但是由于Java只允许单继承，所以如果自定义类需要继承其他类，则只能选择实现Runnable接口。
+</p>
+<p>
+使用ExecutorService、Callable、Future实现有返回结果的多线程
+
+多线程后续会学到，这里暂时先知道一下有这种方法即可。
+
+ExecutorService、Callable、Future这个对象实际上都是属于Executor框架中的功能类。想要详细了解Executor框架的可以访问http://www.javaeye.com/topic/366591 ，这里面对该框架做了很详细的解释。返回结果的线程是在JDK1.5中引入的新特征，确实很实用，有了这种特征我就不需要再为了得到返回值而大费周折了，而且即便实现了也可能漏洞百出。
+
+可返回值的任务必须实现Callable接口，类似的，无返回值的任务必须Runnable接口。执行Callable任务后，可以获取一个Future的对象，在该对象上调用get就可以获取到Callable任务返回的Object了，再结合线程池接口ExecutorService就可以实现传说中有返回结果的多线程了。下面提供了一个完整的有返回结果的多线程测试例子，
+</p>
+				</ul>
+			 
+				<p>创建于2017年12月18日
+				</p>
+			</div>
+			<aside class="right">
+				<div class="about_c">
+					<p>gitHub：<span>DanceSmile</span> | saozhou</p>
+					<p>博主：周浚覃 </p>
+					<p>发布日期：2017-05-24</p>
+					<p>分类：java，多线程</p>
+				<div class="avatar">
+					<a href="#"><span>浚覃</span></a>
+				</div>
+					 
+				 
+				</div>
+			</aside>
+			
+		</article>
+		</textarea>
+		<script src="js/silder.js"></script>
+	</body>
+
+</html>

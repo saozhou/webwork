@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div style="height: 30px;">
+			模块：
+			<select style="width: 100px;" id="pre" onchange="chg(this);">
+				<option value="-1">请选择</option>
+			</select>
+			分类：
+			<select style="width: 100px;" id="city" onchange=" getch(this);" ;></select>
+</div>
+	
+	</body>
+	<script>
+		//声明省
+		var pres = ["升级之路", "碎言碎语", "经验之谈", "学无止境"]; //直接声明Array
+		//声明市
+		var cities = [
+			["初级程序员", "中级程序员", "程序设计师", "架构师", "项目经理", "DBA"],
+			[" ","碎言碎语"],
+			["项目开发","程序人生","面试宝典", "正则表达式", "转型之路"],
+			["java", "Linux", "框架", "设计模式"]
+		];
+
+		var pIndex = -1;
+		var preEle = document.getElementById("pre");
+		var cityEle = document.getElementById("city");
+		var prename;
+
+		//先设置省的值
+		for(var i = 0; i < pres.length; i++) {
+			//声明option.<option value="pres[i]">Pres[i]</option>
+			var op = new Option(pres[i], i);
+			//添加
+			preEle.options.add(op);
+		}
+
+		function chg(obj) {
+			if(obj.value == -1) {
+				cityEle.options.length = 0;
+
+			}
+			//获取值
+			var val = obj.value;
+			pIndex = obj.value;
+			//获取ctiry
+			var cs = cities[val];
+			//获取默认区
+
+			//先清空市
+			cityEle.options.length = 0;
+
+			for(var i = 0; i < cs.length; i++) {
+				var op = new Option(cs[i], i);
+				cityEle.options.add(op);
+			}
+
+		}
+
+		function getch(obj) {
+			var obj = document.getElementById("city");
+			var index = obj.selectedIndex; //序号，取当前选中选项的序号
+			var val = obj.options[index].text;
+			if(val=='程序人生'){
+			 window.location.href="firstProgramer.html"; 
+			}
+			alert(val);
+		}
+	</script>
+	 
+
+</html>

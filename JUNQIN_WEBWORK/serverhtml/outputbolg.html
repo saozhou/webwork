@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<style type="text/css">
+
+		</style>
+		 <link rel="stylesheet" href="../css/servercss/right.css" />
+		<link rel="stylesheet" href="../css/servercss/bloginput.css" />
+		<meta charset="UTF-8">
+		<script type="text/javascript">
+		
+    function imgPreview(fileDom){
+        //判断是否支持FileReader
+        if (window.FileReader) {
+            var reader = new FileReader();
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+
+        //获取文件
+        var file = fileDom.files[0];
+        var imageType = /^image\//;
+        //是否是图片
+        if (!imageType.test(file.type)) {
+            alert("请选择图片！");
+            return;
+        }
+        //读取完成
+        reader.onload = function(e) {
+            //获取图片dom
+            var img = document.getElementById("preview");
+            //图片路径设置为读取的图片
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+	</head>
+
+	<body>
+		
+		<div class="box_blog">
+		 
+				<div class="title_out_box">
+				 
+				
+				
+				
+					<div class="blog_title">
+						
+						<input type="text" class="=bolg_title_input" onblur="if(this.value == '')this.value='标题';" onclick="if(this.value == '标题')this.value='';" value="标题"  style="width: 200px;height: 24px;font-size: 20px;"/></h1>
+					</div>
+				</div>
+				
+					<div class="employee_tag">
+					  <span class="model_span">
+					 模块</span><select name="" class="model_tag" styl">
+						<option value="0">升级之路</option>
+						<option value="1">经验之谈</option>
+						<option value="2">学无止境</option>
+					</select>
+				</div>
+				
+				<div class="employee_tags">
+					 <span>分类</span>
+					<select name="" class="select_tag">
+						<option value="0">初级程序员</option>
+						<option value="1">中级程序员</option>
+						<option value="2">软件设计师</option>
+						<option value="3">系统分析员</option>
+						<option value="4">系统架构师</option>
+						<option value="5">测试工程师</option>
+
+					</select>
+				</div>
+			
+<form name="form1" id="form1" method="post" action="view.asp"> 
+<textarea id="content" name="content" style="display:none"><div>这是隐藏表单中的内容</div></textarea>
+<iframe id="myEditor" src="Edit/editor.htm?id=content&ReadCookie=0" frameborder="0" scrolling="no" width="621" height="457"></iframe>
+<br><br>
+<input type="submit" value="提交">
+</form>
+				</div>
+			 
+           
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+	<script>
+		$(document).ready(function(){
+			$(window).scroll(function () {
+				var top=$(window).scrollTop();
+				if(top>50){
+					$("#topnav").css('background','rgba(128,128,128,1)');
+					$('#topnav').css('transition','1.5s');
+				}
+				else{
+					$("#topnav").css('background','rgba(128,128,128,0)');
+					$('#topnav').css('transition','1.5s');
+				}
+			})
+		})
+	</script>
+</html>

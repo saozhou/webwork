@@ -1,0 +1,445 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>saozhou个人博客</title>
+		<meta name="keywords" content="个人博客" />
+		<meta name="description" content="saozhou的个人博客" />
+
+		<link href="css/base.css" rel="stylesheet">
+		<link href="css/index.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/login.css" />
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<style type="text/css">
+			body,
+			div,
+			ul,
+			li,
+			a,
+			img {
+				margin: 0;
+				padding: 0;
+			}
+			
+			ul,
+			li {
+				list-style: none;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			#wrapper {
+				position: relative;
+				margin: 30px auto;
+				height: 200px;
+			}
+			
+			#banner {
+				position: relative;
+				margin-bottom: 50px;
+				width: 400px;
+				height: 200px;
+				overflow: hidden;
+			}
+			
+			.imgList {
+				position: relative;
+				width: 2000px;
+				height: 200px;
+				z-index: 10;
+				overflow: hidden;
+			}
+			
+			.imgList li {
+				float: left;
+				display: inline;
+			}
+			
+			#prev,
+			#next {
+				position: absolute;
+				z-index: 20;
+				cursor: pointer;
+				opacity: 0.2;
+				filter: alpha(opacity=20);
+			}
+			
+			#prev {
+				left: 10px;
+			}
+			
+			#next {
+				right: 10px;
+			}
+			
+			#prev:hover,
+			#next:hover {
+				opacity: 0.5;
+				filter: alpha(opacity=50);
+			}
+			
+			.bg {
+				position: absolute;
+				bottom: 0;
+				width: 400px;
+				height: 40px;
+				z-index: 20;
+				opacity: 0.4;
+				filter: alpha(opacity=40);
+				background: black;
+			}
+			
+			.infoList {
+				position: absolute;
+				left: 10px;
+				bottom: 10px;
+				z-index: 30;
+			}
+			
+			.infoList li {
+				display: none;
+			}
+			
+			.infoList .infoOn {
+				display: inline;
+				color: white;
+			}
+			
+			.indexList {
+				position: absolute;
+				right: 10px;
+				bottom: 5px;
+				z-index: 30;
+			}
+			
+			.indexList li {
+				float: left;
+				margin-right: 5px;
+				padding: 2px 4px;
+				border: 2px solid black;
+				background: grey;
+				cursor: pointer;
+			}
+			
+			.indexList .indexOn {
+				background: red;
+				font-weight: bold;
+				color: white;
+			}
+			
+			.do ul a {
+				opacity: 0;
+			}
+			
+			.do ul:hover a {
+				opacity: 1;
+			}
+			
+			 
+			/*.do:hover{
+				animation: move 3s;
+			}*/
+			
+			 
+			
+			 
+			
+			 
+			
+			 
+		</style>
+		<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+
+	</head>
+
+	<body>
+
+		<header>
+			<div id="logo">
+				<a href="/"></a>
+			</div>
+			<nav class="topnav" id="topnav">
+				<a href="index.html"><span>首页</span><span class="en">Protal</span></a>
+				<a href="about.html"><span>关于我</span><span class="en">About</span></a>
+				<a href="newlist.html"><span>升级之路</span><span class="en">Life</span></a>
+				<a href="moodlist.html"><span>碎言碎语</span><span class="en">Doing</span></a>
+				<a href="share.html"><span>经验之谈</span><span class="en">Share</span></a>
+				<a href="knowledge.html"><span>学无止境</span><span class="en">Learn</span></a>
+				<a href="javascript:;" onclick="jQuery('.box6').show()" class="show"><span>登陆</span><span class="en">login</span></a>
+			</nav>
+
+		</header>
+		<div class="box6" style="height: 100%;width: 100%;">
+			<div class="login" style="height: 400px;width: 394px;">
+				<div class="box_5"><span class="tag_index">博客管理登陆</span></div>
+				<div class="div-bor">
+
+					<div><i class="icon-user"></i><input type="text" class="username" onblur="if(this.value == '')this.value='username';" onclick="if(this.value == 'username')this.value='';" value="username"></div>
+				</div>
+				<div><i class="icon-password"></i><input type="text" class="password" onblur="if(this.value == '')this.value='password';" onclick="if(this.value == 'password')this.value='';" value="password" /></div>
+				<div class="index_box">
+
+					<a href="serverhtml/login.html"><input type="button" value="登陆" class="index_button" /></a>
+					<input type="button" value="取消" class="cancel_button" onclick="jQuery('.box6').hide()" class="close" />
+				</div>
+
+			</div>
+		</div>
+		<div class="box3">
+			<div class="box4">
+				<a href="javascript:;" onclick="jQuery('.box3').hide()" class="close">关闭</a>
+
+			</div>
+		</div>
+
+		<div class="banner">
+			<section class="box">
+				<ul class="texts">
+					<p>语言只是工具，算法才是核心</p>
+					<p>学习编程是一种乐趣</p>
+					<p>编程之乐</p>
+				</ul>
+				<div id="wrapper">
+					<!-- 最外层部分 -->
+					 
+				<div class="avatar">
+					<a href="#"><span>浚覃</span></a>
+				</div>
+			</section>
+		</div>
+		
+		<script type="text/javascript">
+			var curIndex = 0;
+			var imgLen = $(".imgList li").length; //图片总数
+			// 定时器自动变换2.5秒每次
+			var autoChange = setInterval(function() {
+				if(curIndex < imgLen - 1) {
+					curIndex++;
+				} else {
+					curIndex = 0;
+				}
+				//调用变换处理函数
+				changeTo(curIndex);
+			}, 2500);
+			//左箭头滑入滑出事件处理
+			$("#prev").hover(function() {
+				//滑入清除定时器
+				clearInterval(autoChange);
+			}, function() {
+				//滑出则重置定时器
+				autoChangeAgain();
+			});
+			//左箭头点击处理
+			$("#prev").click(function() {
+				//根据curIndex进行上一个图片处理
+				curIndex = (curIndex > 0) ? (--curIndex) : (imgLen - 1);
+				changeTo(curIndex);
+			});
+			//右箭头滑入滑出事件处理
+			$("#next").hover(function() {
+				//滑入清除定时器
+				clearInterval(autoChange);
+			}, function() {
+				//滑出则重置定时器
+				autoChangeAgain();
+			});
+			//右箭头点击处理
+			$("#next").click(function() {
+				curIndex = (curIndex < imgLen - 1) ? (++curIndex) : 0;
+				changeTo(curIndex);
+			});
+			//对右下角按钮index进行事件绑定处理等
+			$(".indexList").find("li").each(function(item) {
+				$(this).hover(function() {
+					clearInterval(autoChange);
+					changeTo(item);
+					curIndex = item;
+				}, function() {
+					autoChangeAgain();
+				});
+			});
+			//清除定时器时候的重置定时器--封装
+			function autoChangeAgain() {
+				autoChange = setInterval(function() {
+					if(curIndex < imgLen - 1) {
+						curIndex++;
+					} else {
+						curIndex = 0;
+					}
+					//调用变换处理函数
+					changeTo(curIndex);
+				}, 2500);
+			}
+
+			function changeTo(num) {
+				var goLeft = num * 400;
+				$(".imgList").animate({ left: "-" + goLeft + "px" }, 500);
+				$(".infoList").find("li").removeClass("infoOn").eq(num).addClass("infoOn");
+				$(".indexList").find("li").removeClass("indexOn").eq(num).addClass("indexOn");
+			}
+		</script>
+		<div class="template">
+			<div class="box">
+				<h3>
+      <p><span>大学生活</span>记忆照片</p>
+    </h3>
+
+				<ul>
+					<li>
+						<a href="/" target="_blank"><img src="images/1.jpg"></a><span>厦门的沙滩</span></li>
+					<li>
+						<a href="/" target="_blank"><img src="images/2.jpg"></a><span>班级活动</span></li>
+					<li>
+						<a href="/" target="_blank"><img src="images/3.jpg"></a><span>迎新晚会</span></li>
+					<li>
+						<a href="/" target="_blank"><img src="images/4.jpg"></a><span>迎新晚会</span></li>
+					<li>
+						<a href="/" target="_blank"><img src="images/5.jpg"></a><span>朋友生日</span></li>
+					<li>
+						<a href="/" target="_blank"><img src="images/6.jpg"></a><span>暑期生活</span></li>
+				</ul>
+				</ul>
+
+			</div>
+
+		</div>
+
+		<article>
+			<h2 class="title_tj">
+    <p>文章<span>推荐</span></p>
+  </h2>
+			<div class="bloglist left">
+				<div class="do">
+					<h3>java多线程你应该知道的东西</h3>
+					<figure><img src="images/k1.jpg"></figure>
+					<ul>
+						<p>多线程是什么，一个程序员如果连多线程是什么都不知道，你应该是个假的程序员...</p>
+						<a href="serverhtml/contentHtml/content.html" class="readmore">阅读全文>></a>
+					</ul>
+					<p class="dateview"><span>2017-12-18</span><span>作者：周浚覃</span><span>个人博客：[<a href="">程序人生</a>]</span></p>
+				</div>
+				<div class="do">
+					<h3>怎么去获得一份让自己满意的offer</h3>
+					<figure><img src="images/k2.png"></figure>
+					<ul>
+						<p>你没有名校文凭，没有实际经验，那你应该通过什么样的方法去拿到一份offer...</p>
+						<a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
+					</ul>
+					<p class="dateview"><span>2017-12-18</span><span>作者：周浚覃</span><span>个人博客：[<a href="/news/life/">程序人生</a>]</span></p>
+				</div>
+				<div class="do">
+					<h3>一个应届毕业生所需要的专业素养</h3>
+					<figure><img src="images/k3.png"></figure>
+					<ul>
+						<p>如果说掌握一门赖以生计的技术是技术人员要学会的第一课的话， 那么我觉得技术人员要真正学会的第二课，不是技术，而是业务、交流与协作，学会关心其他工作伙伴的工作情况和进展...</p>
+						<a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
+					</ul>
+					<p class="dateview"><span>2017-12-18</span><span>作者：周浚覃</span><span>个人博客：[<a href="/news/life/">程序人生</a>]</span></p>
+				</div>
+				<div class="do">
+					<h3>代码规范</h3>
+					<figure><img src="images/k4.jpg"></figure>
+					<ul>
+						<p>如果说掌握一门赖以生计的技术是技术人员要学会的第一课的话， 那么我觉得技术人员要真正学会的第二课，不是技术，而是业务、交流与协作，学会关心其他工作伙伴的工作情况和进展...</p>
+						<a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
+					</ul>
+					<p class="dateview"><span>2018-12-18</span><span>作者：周浚覃</span><span>个人博客：[<a href="/news/life/">程序人生</a>]</span></p>
+				</div>
+				<div class="do">
+					<h3>学会linux你能干嘛</h3>
+					<figure><img src="images/k5.jpg"></figure>
+					<ul>
+						<p>如果说掌握一门赖以生计的技术是技术人员要学会的第一课的话， 那么我觉得技术人员要真正学会的第二课，不是技术，而是业务、交流与协作，学会关心其他工作伙伴的工作情况和进展...</p>
+						<a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
+					</ul>
+					<p class="dateview"><span>2018-12-18</span><span>作者：周浚覃</span><span>个人博客：[<a href="/news/life/">程序人生</a>]</span></p>
+				</div>
+			</div>
+			<aside class="right">
+
+				<h3>
+      <p>最新<span>文章</span></p>
+    </h3>
+				<ul class="rank">
+					<li>
+						<a href="/" title="程序员的自我修养" target="_blank">程序员的自我修养</a>
+					</li>
+					<li>
+						<a href="/" title="程序员应该做的那些事" target="_blank">程序员应该做的那些事</a>
+					</li>
+					<li>
+						<a href="/" title="java的反射机制" target="_blank">java的反射机制</a>
+					</li>
+					<li>
+						<a href="/" title="二本生和名校生差在哪里" target="_blank">二本生和名校生差在哪里?</a>
+					</li>
+					<li>
+						<a href="/" title="kmp算法" target="_blank">kmp算法</a>
+					</li>
+					<li>
+						<a href="/" title="90后的程序员" target="_blank">90后的程序员</a>
+					</li>
+					<li>
+						<a href="/" title="ssh框架整合" target="_blank">ssh框架整合</a>
+					</li>
+					<li>
+						<a href="/" title="springMVC" target="_blank">springMVC</a>
+					</li>
+				</ul>
+				<h3 class="ph">
+      <p>点击<span>排行</span></p>
+    </h3>
+				<ul class="paih">
+					<li>
+						<a href="/" title="TCP/IP协议" target="_blank">TCP/IP协议</a>
+					</li>
+					<li>
+						<a href="/" title="怎么去搭建一个自己的框架" target="_blank">怎么去搭建一个自己的框架</a>
+					</li>
+					<li>
+						<a href="/" title="java虚拟机" target="_blank">java虚拟机</a>
+					</li>
+					<li>
+						<a href="/" title="程序员怎么提升自己?" target="_blank">程序员怎么提升自己</a>
+					</li>
+					<li>
+						<a href="/" title="怎么掌握考研第一手消息" target="_blank">怎么掌握考研第一手消息</a>
+					</li>
+				</ul>
+				<h3 class="links">
+      <p>友情<span>链接</span></p>
+    </h3>
+				<ul class="website">
+					<li>
+						<a href="/">个人博客</a>
+					</li>
+					<li>
+						<a href="/">谢泽文个人博客</a>
+					</li>
+					<li>
+						<a href="/">3DST技术网</a>
+					</li>
+					<li>
+						<a href="/">思衡网络</a>
+					</li>
+				</ul>
+				</div>
+				<!-- Baidu Button BEGIN -->
+
+				<!-- Baidu Button END -->
+		</article>
+		<footer>
+			<p>Design by DanceSmile
+				<a href="http://www.miitbeian.gov.cn/" target="_blank">个人博客页面</a>
+				<a href="/">网站统计</a>
+			</p>
+		</footer>
+
+	</body>
+
+</html>

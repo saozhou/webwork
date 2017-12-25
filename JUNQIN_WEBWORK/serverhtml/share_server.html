@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<style type="text/css">
+
+		</style>
+		 <link rel="stylesheet" href="../css/servercss/right.css" />
+		<link rel="stylesheet" href="../css/servercss/bloginput.css" />
+		<meta charset="UTF-8">
+		<script type="text/javascript">
+    function imgPreview(fileDom){
+        //判断是否支持FileReader
+        if (window.FileReader) {
+            var reader = new FileReader();
+        } else {
+            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+        }
+
+        //获取文件
+        var file = fileDom.files[0];
+        var imageType = /^image\//;
+        //是否是图片
+        if (!imageType.test(file.type)) {
+            alert("请选择图片！");
+            return;
+        }
+        //读取完成
+        reader.onload = function(e) {
+            //获取图片dom
+            var img = document.getElementById("preview");
+            //图片路径设置为读取的图片
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+	</head>
+
+	<body>
+		
+		<div class="box_blog">
+		<header>
+			<nav class="topnav" id="topnav">
+				<a href="outputbolg.html"><span>升级之路</span><span class="en">Life</span></a>
+				<a href="share_server.html"><span>碎言碎语</span><span class="en">Doing</span></a>
+				<a href="share.html"><span>经验之谈</span><span class="en">Share</span></a>
+				<a href="knowledge.html"><span>学无止境</span><span class="en">Learn</span></a>
+				<a href="javascript:;" onclick="jQuery('.box6').show()" class="show"><span>退出</span><span class="en">login</span></a>
+			</nav>
+		
+		</header>
+				
+				 
+				<div class="content">
+					<div class="content_t1">内容</div>
+					<textarea rows="20" cols="100" name="ddesc">
+				
+			</textarea>
+				</div>
+			<div class="getpicture">
+				 <img id="preview" />
+          <br />
+          <input type="file" name="file" onchange="imgPreview(this)" />	
+		  </div>
+		  <div class="index_box">
+
+					<input type="button" value="发布" class="index_button"/>  
+					<input type="button" value="取消" class="cancel_button" action="index.html" class="close" />
+				
+		</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../js/jquery-3.2.1.min.js" ></script>
+	<script>
+		$(document).ready(function(){
+			$(window).scroll(function () {
+				var top=$(window).scrollTop();
+				if(top>50){
+					$("#topnav").css('background','rgba(128,128,128,1)');
+					$('#topnav').css('transition','1.5s');
+				}
+				else{
+					$("#topnav").css('background','rgba(128,128,128,0)');
+					$('#topnav').css('transition','1.5s');
+				}
+			})
+		})
+	</script>
+</html>

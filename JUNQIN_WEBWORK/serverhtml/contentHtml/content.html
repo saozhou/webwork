@@ -1,0 +1,179 @@
+ <!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>周浚覃个人博客网站―一个钟爱后台开发的程序员的博客网站</title>
+		<meta name="keywords" content="周浚覃" />
+		<meta name="description" content="周浚覃的个人博客" />
+		<link href="../../css/base.css" rel="stylesheet">
+		<link href="../../css/about.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../css/index.css" />
+		
+ <style> 
+ 
+.post_content_main {
+    float: left;
+    width: 840px;
+    padding-bottom: 60px;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, blockquote {
+    padding: 0;
+    margin: 0;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+
+user agent stylesheet
+h1 {
+    display: block;
+    font-size: 2em;
+    -webkit-margin-before: 0.67em;
+    -webkit-margin-after: 0.67em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+
+.w9 #endText {
+    font: 16px/28px "Microsoft Yahei";
+    padding-bottom: 10px;
+}
+#endText {
+    width: auto;
+    margin: 0;
+    font: 18px/32px "Microsoft Yahei";
+    color: #404040;
+}
+
+#endText .f_center {
+    text-align: center;
+    text-indent: 0;
+}
+
+#endText {
+    width: 580px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-align: justify;
+    text-justify: inter-ideograph;
+    clear: both;
+    font-size: 14px;
+    line-height: 24px;
+    padding-bottom: 20px;
+    word-wrap: break-word;
+}
+ </style>
+ <script type="text/javascript" id="bdshare_js" data="type=slide&img=0&pos=right&uid=11824" ></script>  
+<script type="text/javascript" id="bdshell_js"></script>  
+<script type="text/javascript">  
+var bds_config = {"bdTop":155};  
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + new Date().getHours();  
+</script>  
+	</head>
+
+	<body>
+		 <div class="head" style="margin-top:20px ;">
+		 	<a href="https://github.com/saozhou">==<img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="点击我的GIT" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png">==</a>
+		 	 
+		 </div>
+		 
+		<article class="aboutcon" style="margin-top:100px ;">
+			<aside class="left"> 
+			 <div class="post_content_main" id="epContentLeft" deep="2">
+			 	<h1>java多线程初识</h1>
+			 	<div class="post_body" deep="3">
+			 		
+			 		<div class="post_text" id="endText" style="border-top:1px solid #ddd;" deep="4">
+			 			<p class="otitle">
+			 				引
+       &nbsp;如果对什么是线程、什么是进程仍存有疑惑，请先Google之，因为这两个概念不在本文的范围之内。
+
+用多线程只有一个目的，那就是更好的利用cpu的资源，因为所有的多线程代码都可以用单线程来实现。说这个话其实只有一半对，因为反应“多角色”的程序代码，最起码每个角色要给他一个线程吧，否则连实际场景都无法模拟，当然也没法说能用单线程来实现：比如最常见的“生产者，消费者模型”。
+
+很多人都对其中的一些概念不够明确，如同步、并发等等，让我们先建立一个数据字典，以免产生误会。
+
+多线程：指的是这个程序（一个进程）运行时产生了不止一个线程
+并行与并发：
+并行：多个cpu实例或者多台机器同时执行一段处理逻辑，是真正的同时。
+并发：通过cpu调度算法，让用户看上去同时执行，实际上从cpu操作层面不是真正的同时。并发往往在场景中有公用的资源，那么针对这个公用的资源往往产生瓶颈，我们会用TPS或者QPS来反应这个系统的处理能力。
+			 			</p>
+			 			<p class="f_center">
+			 				<img alt="多线程"  src="http://upload-images.jianshu.io/upload_images/1689841-f622a468b2694253.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/>
+			 				<br data-filtered="filtered" />
+			 			</p>
+		 
+ 
+
+<p> 并发与并行
+线程安全：经常用来描绘一段代码。指在并发的情况之下，该代码经过多线程使用，线程的调度顺序不影响任何结果。这个时候使用多线程，我们只需要关注系统的内存，cpu是不是够用即可。反过来，线程不安全就意味着线程的调度顺序会影响最终结果，如不加事务的转账代码：</p>
+void transferMoney(User from, User to, float amount){
+  to.setMoney(to.getBalance() + amount);
+  from.setMoney(from.getBalance() - amount);
+}
+<p> 
+同步：Java中的同步指的是通过人为的控制和调度，保证共享资源的多线程访问成为线程安全，来保证结果的准确。如上面的代码简单加入@synchronized关键字。在保证结果准确的同时，提高性能，才是优秀的程序。线程安全的优先级高于性能。
+好了，让我们开始吧。我准备分成几部分来总结涉及到多线程的内容：
+</p>
+<p>
+扎好马步：线程的状态
+内功心法：每个对象都有的方法（机制）
+太祖长拳：基本线程类
+九阴真经：高级多线程控制类
+扎好马步：线程的状态
+先来两张图：
+</p>
+ 
+ 
+线程状态
+ <p class="f_center">
+			 				<img alt="多线程"  src="http://upload-images.jianshu.io/upload_images/1689841-af3e5b75b44e972c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/>
+			 				<br data-filtered="filtered" />
+			 			</p>
+线程状态转换
+<p class="f_center">
+			 				<img alt="多线程"  src="http://upload-images.jianshu.io/upload_images/1689841-383f7101e6588094.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/>
+			 				<br data-filtered="filtered" />
+			 			</p>
+ 
+<p>
+各种状态一目了然，值得一提的是"blocked"这个状态：
+线程在Running的过程中可能会遇到阻塞(Blocked)情况
+</p>
+<p>
+调用join()和sleep()方法，sleep()时间结束或被打断，join()中断,IO完成都会回到Runnable状态，等待JVM的调度。
+调用wait()，使该线程处于等待池(wait blocked pool),直到notify()/notifyAll()，线程被唤醒被放到锁定池(lock blocked pool )，释放同步锁使线程回到可运行状态（Runnable）
+对Running状态的线程加同步锁(Synchronized)使其进入(lock blocked pool ),同步锁被释放进入可运行状态(Runnable)。
+此外，在runnable状态的线程是处于被调度的线程，此时的调度顺序是不一定的。Thread类中的yield方法可以让一个running状态的线程转入runnable。
+</p>
+ 
+ </div>
+			 	</div>
+			 </div>
+			 </aside>
+			<aside class="right">
+				<div class="about_c">
+					<p>gitHub：<span>DanceSmile</span> | saozhou</p>
+					<p>博主：周浚覃 </p>
+					<p>发布日期：2017-05-24</p>
+					<p>分类：java，多线程</p>
+				<div class="avatar">
+					<a href="#"><span>浚覃</span></a>
+				</div>
+					 
+				 
+				</div>
+			</aside>
+		</article>
+		
+		<script src="js/silder.js"></script>
+	</body>
+
+</html>
